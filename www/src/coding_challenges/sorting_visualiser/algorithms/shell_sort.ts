@@ -1,11 +1,13 @@
 enum ShellSortGapSequence {
 	CURIA,
 	TODUKA,
+	POW2,
 }
 
 const GapSequence: number[][] = [];
 GapSequence[ShellSortGapSequence.CURIA] = [701, 301, 132, 57, 23, 10, 4, 1];
 GapSequence[ShellSortGapSequence.TODUKA] = [1182, 525, 233, 103, 46, 20, 9, 4, 1];
+GapSequence[ShellSortGapSequence.POW2] = [1023, 511, 255, 127, 63, 31, 15, 7, 3, 1];
 
 
 class ShellSort extends Algorithm {
@@ -63,7 +65,8 @@ Algorithms.push({
 	opts: {
 		"gap_sequence": [
 			["curia", ShellSortGapSequence.CURIA],
-			["toduka", ShellSortGapSequence.TODUKA]
+			["toduka", ShellSortGapSequence.TODUKA],
+			["power 2", ShellSortGapSequence.POW2]
 		]
 	}
 })
