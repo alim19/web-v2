@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"target": "ES2020",
+		"sourceMap": true,
+		"removeComments": false,
+		"outDir": "dst/",
+		"noImplicitAny": true,
+	},
+	"include": [
+		"src/**/*"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}

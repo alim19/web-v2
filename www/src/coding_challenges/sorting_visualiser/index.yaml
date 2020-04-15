@@ -1,0 +1,61 @@
+files:
+  index.html:
+    template: template:main
+    meta: template:meta
+    title: &title Sorting Algorithms
+    styles: null
+    scripts: null
+    subheader: 
+      filename: template:subheader
+      title: *title 
+      hierarchy: 
+        - title: Coding Challenges/
+          url: ../
+    content: 
+      - title: Bubble sort
+        url: sorter.html?algo=bubble
+      - title: Cocktail-shaker sort
+        url: sorter.html?algo=cocktailshaker
+      - title: Quick sort
+        url: sorter.html?algo=quicksort
+      - title: Heap sort
+        url: sorter.html?algo=heapsort
+      - title: Shell sort
+        url: sorter.html?algo=shellsort
+  sorter.html:
+    template: template:main
+    meta: template:meta
+    title: &title Sorting Algorithms
+    styles: null
+    scripts: 
+      - asset:p5/p5.js
+      - main.js
+      - algo.js
+      - visualiser.js
+      - color.js
+      - algorithms/bubble_sort.js
+      - algorithms/cocktail_shaker_sort.js
+      - algorithms/heap_sort.js
+      - algorithms/quick_sort.js
+      - algorithms/shell_sort.js
+      - shuffles/fisher_yates.js
+      - shuffles/in_order.js
+      - shuffles/near_sorted.js
+      - visualisers/standard.js
+      - visualisers/standard_centre.js
+      - visualisers/spiral.js
+      - visualisers/pie.js
+      - visualisers/scatter.js
+      - colors/rainbow.js
+      - colors/simple.js
+    subheader:
+      title: *title
+      filename: template:subheader
+      hierarchy:
+        - title: Coding Challenges/
+          url: ../
+        - title: Sorting Algorithms/
+          url: ./
+    content: sorter.html
+    footer: template:footer
+

@@ -1,0 +1,6 @@
+{
+	"scripts": {
+		"build": "npm --prefix sorting_visualiser run build",
+		"clean": "npm --prefix sorting_visualiser run clean"
+	}
+}

@@ -1,0 +1,14 @@
+files:
+  index.html:
+    template: template:main
+    title: "Alex Mansfield's Web Server"
+    header: template:header
+    subheader: null
+    footer: template:footer
+    styles: null
+    scripts: null
+    content:
+      - title: "Games"
+        url: games/
+      - title: "Coding Challenges"
+        url: coding_challenges/

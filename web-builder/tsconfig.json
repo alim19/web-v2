@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ESNext",
+		"allowJs": false,
+		"allowUnreachableCode": false,
+		"outDir": "dst/",
+		"sourceMap": false,
+		"noImplicitAny": true
+	},
+	"include": [
+		"src/**/*.ts"
+	]
+}

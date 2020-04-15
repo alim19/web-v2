@@ -1,0 +1,20 @@
+files:
+  index.html:
+    template: template:main
+    meta: template:meta
+    title: &title Coding Challenges
+    styles: null
+    scripts: null
+    subheader: 
+      filename: template:subheader
+      title: *title 
+      hierarchy: null
+    content: 
+      - title: Sorting Algorithms Visualiser
+        url: sorting_visualiser/
+      - title: Covid-19 tracker/charter
+        url: covid_tracker/
+      - title: Collisions Algorithms
+        url: collisions/
+      - title: Neural Networks
+        url: neural_networks/

@@ -1,0 +1,19 @@
+files:
+  index.html:
+    template: template:main
+    title: Alex Mansfield's Games
+    meta: template:meta
+    styles: null
+    scripts: null
+    subheader: 
+      title: Games listing
+      filename: template:subheader
+    content:
+      - title: Battleships
+        url: battleships/
+      - title: Battleships V2
+        url: battleships_v2/
+      - title: Cards against humanity
+        url: cah/
+      - title: Backgammon
+        url: backgammon/

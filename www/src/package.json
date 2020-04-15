@@ -1,0 +1,6 @@
+{
+	"scripts": {
+		"build": "npm --prefix coding_challenges run build && npm --prefix games run build",
+		"clean": "npm --prefix coding_challenges run clean && npm --prefix games run clean"
+	}
+}

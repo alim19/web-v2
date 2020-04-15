@@ -1,0 +1,38 @@
+files:
+  index.html:
+    template: template:game_loader
+    meta: template:meta
+    title: &title Cards against Humanity
+    scripts: null
+    styles: null
+    header: template:header
+    subheader: 
+      title: *title
+      filename: template:subheader
+      hierarchy:
+        - title : Games/
+          url: ../
+    content: null
+    footer: template:footer
+  game.html:
+    template: template:main
+    meta : template:meta
+    title: &title Cards against Humanity
+    scripts: 
+      - https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js
+      - asset:p5/p5.js
+      - ../game.js
+      - ./game.js
+    styles: 
+      - ./game.css
+    subheader:
+      title: *title
+      filename: template:subheader
+      hierarchy:
+        - title: Games/
+          url: ../
+        - title: CAH/
+          url: ./
+    content: game.html
+    footer: template:footer
+    

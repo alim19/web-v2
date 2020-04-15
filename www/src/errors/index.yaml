@@ -1,0 +1,13 @@
+files:
+  404.html:
+    template: error.html
+    meta: template:meta
+    error: 404
+    message: "Page not found!"
+    title: "404 : Page not found!"
+  500.html:
+    template: error.html
+    meta: template:meta
+    error: 500
+    message: "Server error!"
+    title: "500 : Server error!"

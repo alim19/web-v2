@@ -1,0 +1,37 @@
+files:
+  index.html:
+    template: template:game_loader
+    meta: template:meta
+    title: Battleships V2 Game
+    scripts: null
+    styles: null
+    header: template:header
+    subheader: 
+      title: Battleships V2
+      filename: template:subheader
+      hierarchy:
+        - title : Games/
+          url: ../
+    content: null
+    footer: template:footer
+  game.html:
+    template: template:main
+    meta: template:meta
+    title: Battleships V2 Game
+    scripts: 
+      - https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js
+      - asset:p5/p5.js
+      - ../game.js
+      - ./game.js
+    styles: null
+    header: template:header
+    subheader: 
+      title: Battleships
+      filename: template:subheader
+      hierarchy:
+        - title: Games/
+          url: ../
+        - title: Battleships V2/
+          url: ./
+    content: game.html
+    footer: template:footer

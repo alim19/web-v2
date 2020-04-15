@@ -1,0 +1,19 @@
+files:
+  index.html:
+    template: template:main
+    meta: template:meta
+    title: &title Neural Networks/Machine Learning
+    styles: null
+    scripts: null
+    header: template:header
+    subheader:
+      title: *title
+      filename: template:subheader
+      hierarchy:
+        - title: Coding Challenges/
+          url: ../
+    content: 
+      - title: Simple Perceptron
+        url: perceptron/
+    footer: template:footer
+    

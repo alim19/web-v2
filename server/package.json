@@ -1,0 +1,32 @@
+{
+	"name": "web-games",
+	"version": "1.0.0",
+	"description": "node-based backend and frontend for web-games",
+	"main": "server.js",
+	"scripts": {
+		"build": "npm run clean && tsc",
+		"clean": "rm -rf dst/*",
+		"run": "export PORT=443; node server.js",
+		"test": "export PORT=8080; export DEBUG=1; export DEV=1; node server.js"
+	},
+	"author": "Alex Mansfield",
+	"license": "ISC",
+	"dependencies": {
+		"@types/express": "^4.17.3",
+		"@types/multer": "^1.4.2",
+		"@types/mysql": "^2.15.9",
+		"@types/node": "^13.9.8",
+		"@types/socket.io": "^2.1.4",
+		"body-parser": "^1.19.0",
+		"express": "^4.17.1",
+		"express-force-ssl": "^0.3.2",
+		"multer": "^1.4.2",
+		"mysql": "^2.18.1",
+		"path": "^0.12.7",
+		"socket.io": "^2.3.0",
+		"ts": "^0.2.2"
+	},
+	"devDependencies": {
+		"typescript": "^3.8.3"
+	}
+}

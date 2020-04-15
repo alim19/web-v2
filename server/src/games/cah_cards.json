@@ -1,0 +1,316 @@
+[{
+		"name": "Cards against humanity",
+		"cards": [{
+				"bw": false,
+				"text": "Silence.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "The illusion of shoice in a late-stage capitalist society.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Many bats.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Famine.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Flesh-eating bacteria.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Flying sex snakes.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Not giving a shit about the Third World.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Magnets.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Shapeshifters.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Seeing what happens when you lock people in a room with hungry seagulls.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "A crucifixion.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Jennifer Lawrence.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "72 virgins.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "A live studio audience.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "A time travel paradox.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Authentic Mexican cuisine.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Doing crimes.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Synergistic management solutions.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Crippling debt.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "Daddy issues.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": false,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "Hey Reddit! I’m __________________. Ask me anything.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "Introducing X-treme Baseball! It’s like baseball, but with __________!",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "What is Batman’s guilty pleasure.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "TSA guidelinesnow prohibit __________________ on airplanes",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "Next from J.K. Rowling: Harry Potter and the Chamber of __________________.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "That’s right, I killed _________________. How, you ask? _________________.",
+				"pack_name": "Cards against humanity",
+				"extra": {
+					"pick": 2
+				}
+			},
+			{
+				"bw": true,
+				"text": "I’m sorry, Professor, but I couldn’t complete my homework because of __________.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "And the Academy Award for __________________ goes to __________.",
+				"pack_name": "Cards against humanity",
+				"extra": {
+					"pick": 2
+				}
+			},
+			{
+				"bw": true,
+				"text": "Dude, do not go in that bathroom. There’s __________ in there.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "How did I losemy virginity?",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "It’s a pity that kids these days are all getting involved with _____________.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "Step 1: __________. Step 2: __________. Step 3: Profit.",
+				"pack_name": "Cards against humanity",
+				"extra": {
+					"pick": 2
+				}
+			},
+			{
+				"bw": true,
+				"text": "_________________. Betcha can’t have just one!",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "Kids, I don’t need drugs to get high. I’m high on __________.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "For my next trick, I will pull __________ out of ___________.",
+				"pack_name": "Cards against humanity",
+				"extra": {
+					"pick": 2
+				}
+			},
+			{
+				"bw": true,
+				"text": "While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on _____________________",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "In the Disney Channel Original Movie, Hannah Montana struggles with _____________ for the first time.",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "What’s mysecret power?",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			},
+			{
+				"bw": true,
+				"text": "",
+				"pack_name": "Cards against humanity"
+			}
+		]
+	},
+	{
+		"name": "Covid-19 Pack",
+		"cards": [{
+				"bw": false,
+				"text": "Coronavirus.",
+				"pack_name": "Covid-19 Pack"
+			},
+			{
+				"bw": false,
+				"text": "Boris Johnson in an ICU.",
+				"pack_name": "Covid-19 Pack"
+			}
+		]
+	}
+]

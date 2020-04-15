@@ -1,0 +1,10 @@
+{
+	"scripts": {
+		"build": "npm run build:src && npm run build:dst",
+		"build:dst": "node ../web-builder/dst/index.js src dst",
+		"build:src": "npm --prefix src run build",
+		"clean": "npm run clean:src && npm run clean:dst",
+		"clean:src": "npm --prefix src run clean",
+		"clean:dst": "rm -rf dst"
+	}
+}

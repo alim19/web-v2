@@ -1,0 +1,6 @@
+**/dst/
+**/log/
+**/node_modules/
+**/.security/
+**/.vscode/
+**/*.map

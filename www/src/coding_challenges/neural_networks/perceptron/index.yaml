@@ -1,0 +1,22 @@
+files:
+  index.html:
+    template: template:main
+    meta: template:meta
+    title: &title Simple Perceptron Demo
+    styles: null
+    scripts: 
+      - asset:p5/p5.js
+      - perceptron.js
+      - sketch.js
+    header: template:header
+    subheader:
+      title: *title
+      filename: template:subheader
+      hierarchy:
+        - title: Coding Challenges/
+          url: ../../
+        - title: Neural Networks/
+          url: ../
+    content: template:sketch
+    footer: template:footer
+    

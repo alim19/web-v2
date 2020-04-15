@@ -1,0 +1,13 @@
+{
+	"templateExt": ".html",
+	"ignore": [
+		"wbconfig.json",
+		"tsconfig.json",
+		"**/package.json",
+		"**/*.sh",
+		"**/*.html",
+		"**/*.map",
+		"**/*.ts",
+		"tsd/"
+	]
+}
