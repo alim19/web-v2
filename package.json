@@ -1,5 +1,6 @@
 {
 	"scripts": {
+		"install": "npm --prefix server install && npm --prefix web-builder install",
 		"build": "npm --prefix server run build && npm --prefix web-builder run build && npm --prefix www run build",
 		"test": "npm run build && npm --prefix server run test",
 		"start": "npm run build && npm --prefix server run start"
