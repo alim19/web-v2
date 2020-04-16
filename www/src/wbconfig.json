@@ -9,5 +9,6 @@
 		"**/*.map",
 		"**/*.ts",
 		"tsd/"
-	]
+	],
+	"host": "https://mansfields.org"
 }

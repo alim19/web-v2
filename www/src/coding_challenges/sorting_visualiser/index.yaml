@@ -1,6 +1,7 @@
 files:
   index.html:
     template: template:main
+    priority: 0.64
     meta: template:meta
     title: &title Sorting Algorithms
     styles: null

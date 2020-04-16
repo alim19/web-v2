@@ -1,5 +1,6 @@
 files:
   index.html:
+    priority: 1.0
     template: template:main
     title: "Alex Mansfield's Web Server"
     header: template:header

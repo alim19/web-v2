@@ -1,6 +1,7 @@
 files:
   index.html:
     template: template:main
+    priority: 0.8
     meta: template:meta
     title: &title Coding Challenges
     styles: null

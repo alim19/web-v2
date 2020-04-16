@@ -1,6 +1,7 @@
 files:
   index.html:
     template: template:main
+    priority: 0.8
     title: Alex Mansfield's Games
     meta: template:meta
     styles: null
