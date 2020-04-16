@@ -17,6 +17,13 @@ import {
 import {
 	WCtoRegex
 } from "./wildcard.js";
+import {
+	SitemapURL,
+	makeSitemap
+} from "./sitemap.js";
+import {
+	promises
+} from "dns";
 
 const idx: number = process.argv[0].includes("node") ? 1 : 0;
 if (process.argv.length <= idx + 1) {
@@ -33,20 +40,25 @@ let wbConfig: WBConfig = WBDefaultConfig;
 // console.log(YAML);
 // console.log(YAML.default)
 
+let sitemap: SitemapURL[] = [];
+
 getConfig(root_dir + "/wbconfig.json")
 	.then(async config => {
 		// console.log(config);
 
 		//build directories recursively
-		buildDir('/', config);
+		await buildDir('/', config);
 		//keep all assets, copy to dest dir
-		copyFolder(`${root_dir}/${config.assetDir}/`, `${out_dir}/${config.assetDir}/`);
+		await copyFolder(`${root_dir}/${config.assetDir}/`, `${out_dir}/${config.assetDir}/`);
 
-
+		//make sitemap.xml
+		if (config.sitemap == true)
+			makeSitemap(sitemap, `${out_dir}/sitemap.xml`);
 	})
 
 async function buildDir(dir: string, config: WBConfig) {
 	let nodes = await fsPromise.readdir(root_dir + dir);
+	let wait: Promise < any > [] = [];
 	// console.log(nodes);
 	fsPromise.mkdir(out_dir + dir).catch(() => {});
 	for (let node of nodes) {
@@ -61,7 +73,13 @@ async function buildDir(dir: string, config: WBConfig) {
 				for (let file in doc.files) {
 					let genFile = await GenerateFile(doc.files[file], file, dir, config);
 					console.log(dir + file);
-					fsPromise.writeFile(out_dir + dir + file, genFile);
+					wait.push(fsPromise.writeFile(out_dir + dir + file, genFile));
+					let priority = doc.files[file].priority || 0;
+					if (priority)
+						sitemap.push({
+							loc: config.host + dir + file,
+							priority: priority,
+						});
 					// console.log(genFile);
 				}
 			} else {
@@ -74,7 +92,7 @@ async function buildDir(dir: string, config: WBConfig) {
 				// console.log(`${c?"Yes ":"No  "}:${dir}${node}`);
 
 				if (c)
-					fsPromise.copyFile(root_dir + dir + node, out_dir + dir + node);
+					wait.push(fsPromise.copyFile(root_dir + dir + node, out_dir + dir + node));
 			}
 
 		} else if (s.isDirectory()) {
@@ -86,9 +104,10 @@ async function buildDir(dir: string, config: WBConfig) {
 				if (r.test(dir + node)) c = false;
 			}
 			if (c && !(config.templateDir.replace('/', '') == node) && !(config.assetDir.replace('/', '') == node))
-				buildDir(dir + node + '/', config);
+				wait.push(buildDir(dir + node + '/', config));
 		}
 	}
+	return Promise.all(wait);
 }
 
 

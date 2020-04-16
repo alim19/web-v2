@@ -18,6 +18,7 @@ export interface FileObj {
 		} [],
 		footer: string | FooterObj,
 		[key: string]: any,
+		priority ? : number,
 }
 
 export interface SubHeaderObj {
