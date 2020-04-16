@@ -10,5 +10,6 @@
 		"**/*.ts",
 		"tsd/"
 	],
-	"host": "https://mansfields.org"
+	"host": "https://mansfields.org",
+	"sitemap": true
 }
