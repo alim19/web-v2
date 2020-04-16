@@ -4,3 +4,4 @@
 **/.security/
 **/.vscode/
 **/*.map
+npm-debug.log
