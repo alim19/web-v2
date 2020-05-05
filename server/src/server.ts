@@ -16,15 +16,14 @@ import {
 import * as bodyParser from "body-parser";
 import multer = require("multer");
 import {
-	forceSSL
-	//@ts-ignore
-} from "express-force-ssl"
-import {
 	readFileSync
 } from "fs";
 import {
 	createServer
 } from "https";
+import {
+	MC_Proxy
+} from "./web-mc";
 
 const upload = multer();
 const app: express.Application = express();
@@ -36,11 +35,28 @@ const SSL_OPTS = {
 	cert: readFileSync(".security/origin.pem"),
 }
 
+function CORS(req: express.Request, res: express.Response, next: express.NextFunction) {
+	if (req.method == "OPTIONS") {
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader("Access-Control-Allow-Headers", "*");
+		res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
+		res.end();
+		return;
+	}
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Headers", "*");
+	res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
+
+	next();
+}
+
 let server;
 if (DEV) {
 	server = app.listen(PORT, () => {
 		console.log(`listening on port:${PORT}`);
 	})
+	app.use(CORS);
+	console.log("Allowing cross origin sharing");
 } else {
 	server = createServer(SSL_OPTS, app)
 		.listen(PORT, () => {
@@ -60,6 +76,8 @@ app.use(bodyParser.json());
 
 app.use(Log);
 app.use(GAMES.API);
+
+app.use(MC_Proxy)
 
 
 app.use(autoredir);
