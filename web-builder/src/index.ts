@@ -42,12 +42,12 @@ let wbConfig: WBConfig = WBDefaultConfig;
 
 let sitemap: SitemapURL[] = [];
 
-getConfig(root_dir + "/wbconfig.json")
+getConfig(root_dir + "/wbconfig.json", WBDefaultConfig)
 	.then(async config => {
 		// console.log(config);
 
 		//build directories recursively
-		await buildDir('/', config);
+		await buildDir('/', [config], false);
 		//keep all assets, copy to dest dir
 		await copyFolder(`${root_dir}/${config.assetDir}/`, `${out_dir}/${config.assetDir}/`);
 
@@ -56,57 +56,77 @@ getConfig(root_dir + "/wbconfig.json")
 			makeSitemap(sitemap, `${out_dir}/sitemap.xml`);
 	})
 
-async function buildDir(dir: string, config: WBConfig) {
+async function buildDir(dir: string, configs: WBConfig[], hasConfig: boolean = true) {
 	let nodes = await fsPromise.readdir(root_dir + dir);
 	let wait: Promise < any > [] = [];
 	// console.log(nodes);
 	fsPromise.mkdir(out_dir + dir).catch(() => {});
-	for (let node of nodes) {
-		// console.log(node);
-		let s = await fsPromise.stat(root_dir + dir + node);
-		if (s.isFile()) {
-			if (node == "index.yaml") {
-				// console.log()
-				let file = await fsPromise.readFile(root_dir + dir + node);
-				let doc: yamlFile = YAML.parseDocument(file.toString()).toJSON();
-				// console.log(doc);
-				for (let file in doc.files) {
-					let genFile = await GenerateFile(doc.files[file], file, dir, config);
-					console.log(dir + file);
-					wait.push(fsPromise.writeFile(out_dir + dir + file, genFile));
-					let priority = doc.files[file].priority || 0;
-					if (priority)
-						sitemap.push({
-							loc: config.host + dir + file,
-							priority: priority,
-						});
-					// console.log(genFile);
+	if(hasConfig && nodes.includes("wbconfig.json")){
+		console.log(`Found another wbconfig.json in ${root_dir + dir}`);
+		wait.push(
+			getConfig(root_dir + dir + "/wbconfig.json", configs[0])
+				.then(async config => {
+					// console.log(config);
+			
+					//build directories recursively
+					await buildDir(dir, [config, ...configs], false);
+					//keep all assets, copy to dest dir
+					await copyFolder(`${root_dir + dir}/${config.assetDir}/`, `${out_dir + dir}/${config.assetDir}/`);
+			
+					//make sitemap.xml
+					if (config.sitemap == true)
+						makeSitemap(sitemap, `${out_dir}/sitemap.xml`);
+				})
+			)
+	}
+	else
+		for (let node of nodes) {
+			// console.log(node);
+			let s = await fsPromise.stat(root_dir + dir + node);
+			if (s.isFile()) {
+				if (node == "index.yaml") {
+					// console.log()
+					let file = await fsPromise.readFile(root_dir + dir + node);
+					let doc: yamlFile = YAML.parseDocument(file.toString()).toJSON();
+					// console.log(doc);
+					for (let file in doc.files) {
+						let genFile = await GenerateFile(doc.files[file], file, dir, configs);
+						console.log(dir + file);
+						wait.push(fsPromise.writeFile(out_dir + dir + file, genFile));
+						let priority = doc.files[file].priority || 0;
+						if (priority)
+							sitemap.push({
+								loc: configs[0].host + dir + file,
+								priority: priority,
+							});
+						// console.log(genFile);
+					}
+				}else {
+					let c = true;
+					for (let e of configs[0].ignore) {
+						if (e == node) c = false;
+						let r = WCtoRegex(e);
+						if (r.test(dir + node)) c = false;
+					}
+					// console.log(`${c?"Yes ":"No  "}:${dir}${node}`);
+
+					if (c)
+						wait.push(fsPromise.copyFile(root_dir + dir + node, out_dir + dir + node));
 				}
-			} else {
+
+			} else if (s.isDirectory()) {
+
 				let c = true;
-				for (let e of config.ignore) {
+				for (let e of configs[0].ignore) {
 					if (e == node) c = false;
 					let r = WCtoRegex(e);
 					if (r.test(dir + node)) c = false;
 				}
-				// console.log(`${c?"Yes ":"No  "}:${dir}${node}`);
-
-				if (c)
-					wait.push(fsPromise.copyFile(root_dir + dir + node, out_dir + dir + node));
+				//this if statement needs updating!
+				if (c && !(configs[0].templateDir.replace('/', '') == node) && !(configs[0].assetDir.replace('/', '') == node))
+					wait.push(buildDir(dir + node + '/', configs));
 			}
-
-		} else if (s.isDirectory()) {
-
-			let c = true;
-			for (let e of config.ignore) {
-				if (e == node) c = false;
-				let r = WCtoRegex(e);
-				if (r.test(dir + node)) c = false;
-			}
-			if (c && !(config.templateDir.replace('/', '') == node) && !(config.assetDir.replace('/', '') == node))
-				wait.push(buildDir(dir + node + '/', config));
 		}
-	}
 	return Promise.all(wait);
 }
 
@@ -114,14 +134,14 @@ async function buildDir(dir: string, config: WBConfig) {
 // get a list of all index.yaml files
 
 
-async function getConfig(filename: string): Promise < WBConfig > {
+async function getConfig(filename: string, defaultConfig: WBConfig): Promise < WBConfig > {
 	let conf: WBConfig;
 	try {
 		let confFile = await fsPromise.readFile(filename);
 		conf = JSON.parse(confFile.toString())
 	} catch {}
 	return {
-		...wbConfig,
+		...defaultConfig,
 		...conf
 	};
 }
@@ -147,20 +167,20 @@ async function copyFolder(src: string, dst: string) {
 	} catch {}
 }
 
-async function GenerateFile(f: FileObj, fileName: string, curDir: string, config: WBConfig): Promise < string > {
-	const templatedir = config.templateDir;
-	const templateExt = config.templateExt
-	const assetdir = config.assetDir;
+async function GenerateFile(f: FileObj, fileName: string, curDir: string, configs: WBConfig[]): Promise < string > {
+	const templatedirs = configs.map(x => x.templateDir);
+	const templateExts = configs.map(x => x.templateExt);
+	const assetdir = configs[0].assetDir;
 	let template: string = "";
 	let file: string;
-	template = await getFile(f.template, curDir, config);
+	template = await getFile(f.template, curDir, configs);
 	file = template;
 	let r = /#{.*}/g;
 	let finds: RegExpExecArray[] = [];
 	let find: RegExpExecArray;
 	while (find = r.exec(file)) {
 		finds.push(find);
-		// console.log(find[0]);
+		// console.log(find);
 		// let fieldName: string = find[0].substr(2, find[0].length - 3);
 		// for (let k in f) {
 		// 	// console.log(k + ',' + fieldName);
@@ -176,7 +196,7 @@ async function GenerateFile(f: FileObj, fileName: string, curDir: string, config
 		let field = _f[0].substring(2, _f[0].length - 1);
 		if (field.split(':')[0] == "template") {
 			// console.log("static template located");
-			let _file = await getFile(field, curDir, config);
+			let _file = await getFile(field, curDir, configs);
 			file = file.replace(_f[0], _file);
 
 			continue;
@@ -197,10 +217,12 @@ async function GenerateFile(f: FileObj, fileName: string, curDir: string, config
 				let html = "";
 				if (typeof f[field] == 'string') {
 					//@ts-ignore
-					html += `<link rel="stylesheet" href="${getFilePath(f[field], curDir, config)}"/>\n`
+					let href = await getFilePath(f[field], curDir, configs);
+					html += `<link rel="stylesheet" href="${href}"/>\n`
 				} else if (f[field] instanceof Array) {
 					for (let _f of f[field]) {
-						html += `<link rel="stylesheet" href="${getFilePath(_f, curDir, config)}"/>\n`
+						let href = await getFilePath(_f, curDir, configs);
+						html += `<link rel="stylesheet" href="${href}"/>\n`
 					}
 				}
 				file = file.replace(_f[0], html);
@@ -210,10 +232,12 @@ async function GenerateFile(f: FileObj, fileName: string, curDir: string, config
 				let html = "";
 				if (typeof f[field] == 'string') {
 					//@ts-ignore
-					html += `<script src="${getFilePath(f[field], curDir, config)}"></script>\n`
+					let src = await getFilePath(f[field], curDir, configs);
+					html += `<script src="${src}"></script>\n`
 				} else if (f[field] instanceof Array) {
 					for (let _f of f[field]) {
-						html += `<script src="${getFilePath(_f, curDir, config)}"></script>\n`
+						let src = await getFilePath(_f, curDir, configs);
+						html += `<script src="${src}"></script>\n`
 					}
 				}
 				file = file.replace(_f[0], html);
@@ -226,7 +250,7 @@ async function GenerateFile(f: FileObj, fileName: string, curDir: string, config
 
 
 					//@ts-ignore
-					let _file = await getFile(f[field].filename, curDir, config);
+					let _file = await getFile(f[field].filename, curDir, configs);
 					//@ts-ignore
 					let t = f[field].title;
 					let hierarchy: {
@@ -279,7 +303,7 @@ async function GenerateFile(f: FileObj, fileName: string, curDir: string, config
 					if (typeof (f[field]) == "string") {
 						try {
 							//@ts-ignore
-							let _file = await getFile(f[field], curDir, config);
+							let _file = await getFile(f[field], curDir, configs);
 							template = _file.toString();
 							file = file.replace(_f[0], template);
 						} catch (e) {
@@ -298,7 +322,8 @@ async function GenerateFile(f: FileObj, fileName: string, curDir: string, config
 							try {
 								let path = root_dir + '/';
 								if (templateFN.split(':')[0] == "template") {
-									path += templatedir + '/' + templateFN.substr(templateFN.indexOf(':') + 1) + templateExt;
+									path += await getFilePath(templateFN, curDir, configs);
+									// path += templatedir + '/' + templateFN.substr(templateFN.indexOf(':') + 1) + templateExt;
 									// }else if(){
 
 								} else {
@@ -332,25 +357,39 @@ async function GenerateFile(f: FileObj, fileName: string, curDir: string, config
 	return file;
 }
 
-async function getFile(filename: string, curDir: string, config: WBConfig): Promise < string > {
-	let path = getFilePath(filename, curDir, config);
-	return (await fsPromise.readFile(root_dir + path)).toString();
+async function getFile(filename: string, curDir: string, configs: WBConfig[]): Promise < string > {
+	try{
+		let path = await getFilePath(filename, curDir, configs);
+		return (await fsPromise.readFile(root_dir + path)).toString();
+	}catch(e){
+		return Promise.reject(`file not found: ${e}`);
+	}
 }
 
-function getFilePath(filename: string, curDir: string, config: WBConfig): string {
+async function getFilePath(filename: string, curDir: string, configs: WBConfig[]): Promise<string> {
 	let path = "";
 	let b = filename.split(':')[0];
 	let bn = filename.substr(filename.indexOf(':') + 1);
-	if (b == "asset") {
-		path += '/' + config.assetDir + bn;
-	} else if (b == "template") {
-		path += '/' + config.templateDir + bn + config.templateExt;
-	} else if (b == "http" || b == "https") {
-		path = filename;
-	} else if (filename[0] == '/') {
-		path += filename;
-	} else {
-		path += curDir + filename;
+	for(let config of configs){
+		if (b == "asset") {
+			path = '/' + config.assetDir + bn;
+		} else if (b == "template") {
+			path = '/' + config.templateDir + bn + config.templateExt;
+		} else if (b == "http" || b == "https") {
+			path = filename;
+			return Promise.resolve(path);
+		} else if (filename[0] == '/') {
+			path = filename;
+			return Promise.resolve(path);
+		} else {
+			path = curDir + filename;
+			return Promise.resolve(path);
+		}
+		//if path exists
+		try{
+			await fsPromise.access(root_dir + path)
+			return Promise.resolve(path);
+		}catch{}
 	}
-	return path;
+	return Promise.reject(`Could not find file: ${curDir + filename}`)
 }
