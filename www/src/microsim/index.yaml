@@ -1,0 +1,12 @@
+files:
+  index.html:
+    priority: 0.9
+    template: template:main
+    header: template:header
+    subheader: null
+    footer: template:footer
+    content: template:wasm
+    title: "MicroSim Emulator"
+    scripts: 
+      - ./microsim.js
+    styles: null
